@@ -34,6 +34,7 @@ using DataMatrix.NetCore;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using NUnit.Framework;
@@ -49,6 +50,8 @@ namespace Test.DataMatrix.NetCore
         [Test]
         public void EncodeImage()
         {
+            const string input = "Hello World";
+
             var encoder = new DmtxImageEncoder();
             var options = new DmtxImageEncoderOptions
             {
@@ -58,12 +61,12 @@ namespace Test.DataMatrix.NetCore
                 ForeColor = Color.Green
             };
 
-            var encodedBitmap = encoder.EncodeImage("Hello World!", options);
+            var encodedBitmap = encoder.EncodeImage(input, options);
             var ms = new MemoryStream();
             encodedBitmap.Save(ms, ImageFormat.Png);
-            ms.Position = 0;
-            Assert.AreEqual(2258, ms.Length);
-            Assert.AreEqual("eGrX26R77KSLUyDjD4WmkQ==", Convert.ToBase64String(Hasher.ComputeHash(ms)));
+
+            Assert.Greater(ms.Length, 0);
+            Assert.AreEqual(input, DecodeHelper(ms));
         }
 
         [Test]
@@ -81,7 +84,7 @@ namespace Test.DataMatrix.NetCore
             Assert.IsNotNull(ms, "Missing helloWorld.png resource");
 
             var decoder = new DmtxImageDecoder();
-            var codes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 3));
+            var codes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, TimeSpan.FromSeconds(3));
 
             Assert.AreEqual(1, codes.Count);
             Assert.AreEqual("HELLO WORLD", codes[0]);
@@ -143,19 +146,19 @@ namespace Test.DataMatrix.NetCore
         [Test]
         public void EncodeImageMosaic()
         {
+            const string input = "Hello World!";
             var encoder = new DmtxImageEncoder();
             var options = new DmtxImageEncoderOptions
             {
                 ModuleSize = 8,
                 MarginSize = 4
             };
-            var encodedBitmap = encoder.EncodeImageMosaic("Hello World!", options);
+            var encodedBitmap = encoder.EncodeImageMosaic(input, options);
             var ms = new MemoryStream();
             encodedBitmap.Save(ms, ImageFormat.Png);
-            ms.Position = 0;
 
-            Assert.AreEqual(2247, ms.Length);
-            Assert.AreEqual("FAwh6z2SnMPX3GR16TSTMw==", Convert.ToBase64String(Hasher.ComputeHash(ms)));
+            Assert.Greater(ms.Length, 0);
+            Assert.AreEqual(input, DecodeHelper(ms, true));
         }
 
         [Test]
@@ -164,7 +167,7 @@ namespace Test.DataMatrix.NetCore
             var decoder = new DmtxImageDecoder();
             var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.encodedMosaicImg.png");
             Assert.IsNotNull(ms, "Missing encodedMosaicImg.png resource");
-            var codes = decoder.DecodeImageMosaic((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 3));
+            var codes = decoder.DecodeImageMosaic((Bitmap)Image.FromStream(ms), 1, TimeSpan.FromSeconds(3));
 
             Assert.AreEqual(1, codes.Count);
             Assert.AreEqual("Hello World!", codes[0]);
@@ -173,7 +176,7 @@ namespace Test.DataMatrix.NetCore
         [Test]
         public void TestGs1Encode()
         {
-            var gs1Code1 = "10AC3454G3";
+            const string gs1Code1 = "10AC3454G3";
             var encoder = new DmtxImageEncoder();
             var options = new DmtxImageEncoderOptions
             {
@@ -186,10 +189,9 @@ namespace Test.DataMatrix.NetCore
             var encodedBitmap1 = encoder.EncodeImage(gs1Code1, options);
             var ms = new MemoryStream();
             encodedBitmap1.Save(ms, ImageFormat.Png);
-            ms.Position = 0;
 
-            Assert.AreEqual(2043, ms.Length);
-            Assert.AreEqual("dbvp/GiauLb7JRCmVfcWSQ==", Convert.ToBase64String(Hasher.ComputeHash(ms)));
+            Assert.Greater(ms.Length, 0);
+            Assert.AreEqual(gs1Code1, DecodeHelper(ms));
         }
 
         [Test]
@@ -198,7 +200,7 @@ namespace Test.DataMatrix.NetCore
             var decoder = new DmtxImageDecoder();
             var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.gs1DataMatrix1.png");
             Assert.IsNotNull(ms, "Missing gs1DataMatrix1.png resource");
-            var decodedCodes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 5));
+            var decodedCodes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, TimeSpan.FromSeconds(5));
 
             Assert.IsNotNull(decodedCodes);
             Assert.AreEqual(1, decodedCodes.Count);
@@ -211,11 +213,19 @@ namespace Test.DataMatrix.NetCore
             var decoder = new DmtxImageDecoder();
             var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.gs1DataMatrix2.gif");
             Assert.IsNotNull(ms, "Missing gs1DataMatrix2.gif resource");
-            var decodedCodes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 5));
+            var decodedCodes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, TimeSpan.FromSeconds(5));
 
             Assert.IsNotNull(decodedCodes);
             Assert.AreEqual(1, decodedCodes.Count);
             Assert.AreEqual("010761234567890017100503", decodedCodes[0]);
+        }
+
+        private static string DecodeHelper(Stream stream, bool isMosaic = false)
+        {
+            stream.Position = 0;
+            var decoder = new DmtxImageDecoder();
+            var decoded = isMosaic ? decoder.DecodeImageMosaic((Bitmap)Image.FromStream(stream), 1, TimeSpan.FromSeconds(5)): decoder.DecodeImage((Bitmap)Image.FromStream(stream), 1, TimeSpan.FromSeconds(5));
+            return decoded?.FirstOrDefault();
         }
     }
 }
