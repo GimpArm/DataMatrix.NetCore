@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <Version>0.4.2</Version>
+    <Description>Encode and Decode DataMatrix strings and images.</Description>
+    <Authors>Scott Downing &amp; Michael Faschinger</Authors>
+    <Company>Figz International UG</Company>
+    <RepositoryUrl>https://github.com/GimpArm/DataMatrix.NetCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/GimpArm/DataMatrix.NetCore</PackageProjectUrl>
+  </PropertyGroup>
+</Project>
