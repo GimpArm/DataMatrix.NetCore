@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataMatrix.NetCore", "DataMatrix.NetCore\DataMatrix.NetCore.csproj", "{360E0AE6-9C74-4523-B0B4-5D7B834DC62E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.DataMatrix.NetCore", "Test.DataMatrix.NetCore\Test.DataMatrix.NetCore.csproj", "{EFEA09F5-0034-483B-86E7-6B7A0340BBFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{360E0AE6-9C74-4523-B0B4-5D7B834DC62E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360E0AE6-9C74-4523-B0B4-5D7B834DC62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360E0AE6-9C74-4523-B0B4-5D7B834DC62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360E0AE6-9C74-4523-B0B4-5D7B834DC62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEA09F5-0034-483B-86E7-6B7A0340BBFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEA09F5-0034-483B-86E7-6B7A0340BBFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEA09F5-0034-483B-86E7-6B7A0340BBFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEA09F5-0034-483B-86E7-6B7A0340BBFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52861BBC-B1F2-42BF-B528-5376BC02F56D}
+	EndGlobalSection
+EndGlobal

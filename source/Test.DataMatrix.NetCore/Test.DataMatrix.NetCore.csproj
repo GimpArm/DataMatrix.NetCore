@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\encodedMosaicImg.png" />
+    <None Remove="Resources\gs1DataMatrix1.png" />
+    <None Remove="Resources\gs1DataMatrix2.gif" />
+    <None Remove="Resources\helloWorld.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\encodedMosaicImg.png" />
+    <EmbeddedResource Include="Resources\gs1DataMatrix1.png" />
+    <EmbeddedResource Include="Resources\gs1DataMatrix2.gif" />
+    <EmbeddedResource Include="Resources\helloWorld.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataMatrix.NetCore\DataMatrix.NetCore.csproj" />
+  </ItemGroup>
+
+</Project>
