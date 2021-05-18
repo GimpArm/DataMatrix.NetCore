@@ -2,9 +2,12 @@
   <PropertyGroup>
     <Version>0.4.2</Version>
     <Description>Encode and Decode DataMatrix strings and images.</Description>
-    <Authors>Scott Downing &amp; Michael Faschinger</Authors>
+    <Authors>Scott Downing, Michael Faschinger</Authors>
     <Company>Figz International UG</Company>
     <RepositoryUrl>https://github.com/GimpArm/DataMatrix.NetCore</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/GimpArm/DataMatrix.NetCore</PackageProjectUrl>
+    <PackageTags>DataMatrix</PackageTags>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 </Project>
