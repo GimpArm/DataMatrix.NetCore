@@ -77,7 +77,7 @@ namespace Test.DataMatrix.NetCore
 
         [Test]
         public void DecodeImage(){
-            var ms = CurrentAssembly.GetManifestResourceStream("DataMatrixTest.Resources.helloWorld.png");
+            var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.helloWorld.png");
             Assert.IsNotNull(ms, "Missing helloWorld.png resource");
 
             var decoder = new DmtxImageDecoder();
@@ -162,7 +162,7 @@ namespace Test.DataMatrix.NetCore
         public void DecodeImageMosaic()
         {
             var decoder = new DmtxImageDecoder();
-            var ms = CurrentAssembly.GetManifestResourceStream("DataMatrixTest.Resources.encodedMosaicImg.png");
+            var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.encodedMosaicImg.png");
             Assert.IsNotNull(ms, "Missing encodedMosaicImg.png resource");
             var codes = decoder.DecodeImageMosaic((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 3));
 
@@ -196,7 +196,7 @@ namespace Test.DataMatrix.NetCore
         public void TestGs1DecodePng()
         {
             var decoder = new DmtxImageDecoder();
-            var ms = CurrentAssembly.GetManifestResourceStream("DataMatrixTest.Resources.gs1DataMatrix1.png");
+            var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.gs1DataMatrix1.png");
             Assert.IsNotNull(ms, "Missing gs1DataMatrix1.png resource");
             var decodedCodes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 5));
 
@@ -209,7 +209,7 @@ namespace Test.DataMatrix.NetCore
         public void TestGs1DecodeGif()
         {
             var decoder = new DmtxImageDecoder();
-            var ms = CurrentAssembly.GetManifestResourceStream("DataMatrixTest.Resources.gs1DataMatrix2.gif");
+            var ms = CurrentAssembly.GetManifestResourceStream("Test.DataMatrix.NetCore.Resources.gs1DataMatrix2.gif");
             Assert.IsNotNull(ms, "Missing gs1DataMatrix2.gif resource");
             var decodedCodes = decoder.DecodeImage((Bitmap)Image.FromStream(ms), 1, new TimeSpan(0, 0, 5));
 
